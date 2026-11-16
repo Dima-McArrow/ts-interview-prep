@@ -2,5 +2,29 @@
 # Runs the full project check before every commit; a failing check blocks the commit.
 # Enabled by `npm install` (the "prepare" script sets git's core.hooksPath to .githooks).
 # Skip it once, e.g. for a work-in-progress commit: git commit --no-verify
-echo "pre-commit: npm run check…"
+#
+# It checks exactly what is being committed: unstaged changes and untracked files are
+# hidden in a stash during the check and restored afterwards.
+#  - Restore = `git reset --hard` + `git stash pop --index`: starting from a clean HEAD the
+#    pop can't conflict, and --index brings back the staged part too, so the commit is
+#    made from exactly what you `git add`-ed.
+#  - Nothing to hide → no stash at all (a `pop` would grab an older, unrelated stash).
+#  - If the check is interrupted, your changes are safe in `git stash list`
+#    ("pre-commit: hidden changes"); restore them with `git stash pop --index`.
+
+if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+  echo "pre-commit: npm run check…"
+  npm run check --silent
+  exit $?
+fi
+
+echo "pre-commit: hiding unstaged changes, then npm run check…"
+git stash push --keep-index --include-untracked --quiet -m "pre-commit: hidden changes" || exit 1
 npm run check --silent
+status=$?
+git reset --hard --quiet
+git stash pop --index --quiet || {
+  echo "pre-commit: could not restore your changes; they are in 'git stash list'" >&2
+  exit 1
+}
+exit $status
