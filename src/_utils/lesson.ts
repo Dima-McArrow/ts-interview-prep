@@ -10,6 +10,8 @@
  *      `const a = [1]; a.push(2); console.log(a);`
  *  - A bare value line (`a`, `a === b`, `({ a: 1 })`) is rejected before the lesson starts:
  *    it compiles but does nothing in a real file. Actions are fine: calls, assignments, await.
+ *  - Every snippet must compile as TypeScript (browser libs + the lesson file's top part,
+ *    see checkTypes). To show a TS error on purpose, mark the example with `typecheck`.
  *  - Top-level `await` is allowed.
  *  - If the snippet throws, the error is printed as a result (💥 TypeError: ...).
  *  - Variables from `lesson.scope` are available inside every snippet.
@@ -17,6 +19,11 @@
  * CLI flags (after `--` when using npm run):
  *   --all     no pauses (also automatic when stdin is not a terminal)
  *   --from N  start from section N
+ *   --toc     print the lesson's sections and exit
+ *
+ * Modes set by helper scripts (env variables, not flags):
+ *   LESSON_TOC=1    only register the lesson data          (npm run lessons, npm run toc)
+ *   LESSON_CHECK=1  only run the static checks, print ✅/🛑  (npm run check:lessons)
  */
 import { transformSync } from 'esbuild';
 import { readFileSync } from 'node:fs';
