@@ -9,7 +9,6 @@
  *
  * Detailed explanations of every answer: solutions/02-map-set.ts
  */
-import type { argv0 } from 'node:process';
 import { TODO, todo } from '../_utils/todo';
 
 // ===========================================================================
@@ -154,7 +153,7 @@ export function firstDuplicate<T>(arr: T[]): T | undefined {
  *  3. "At least one" → some (it stops at the first match).
  */
 export function hasCommon<T>(a: T[], b: T[]): boolean {
-  let doesit = new Set(a);
+  const doesit = new Set(a);
   for (const e of b) {
     if (doesit.has(e)) return true;
   }

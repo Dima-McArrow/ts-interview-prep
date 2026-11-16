@@ -198,8 +198,8 @@ export function chunk<T>(arr: T[], size: number): T[][] {
  *  3. Alternative: reduce with initialValue [[], []].
  */
 export function partition<T>(arr: T[], predicate: (item: T) => boolean): [T[], T[]] {
-  let passed = arr.filter((item) => predicate(item));
-  let failed = arr.filter((item) => !predicate(item));
+  const passed = arr.filter((item) => predicate(item));
+  const failed = arr.filter((item) => !predicate(item));
 
   return [passed, failed];
 }
