@@ -83,6 +83,8 @@ export function sum(nums: number[]): number {
 | `npm run check:lessons`  | Проверить примеры всех уроков (строки-значения, типы TS), не показывая уроки                        |
 | `npm run check`          | Всё разом: typecheck → lint → format:check → check:lessons → test:solutions (стоп на первой ошибке) |
 
+🔒 Перед каждым коммитом git сам запускает `npm run check` (хук `.githooks/pre-commit`, включается при `npm install`). Если проверка красная — коммит не создастся. Пропустить один раз: `git commit --no-verify`.
+
 💡 В VS Code поставь рекомендованное расширение **Vitest** (`vitest.explorer`) — тесты появятся в сайдбаре, можно запускать по одному и видеть ✅/❌ прямо в редакторе.
 
 ## Роадмап

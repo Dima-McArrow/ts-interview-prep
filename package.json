@@ -20,6 +20,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "prepare": "git config core.hooksPath .githooks",
     "check:lessons": "tsx src/_utils/check-lessons.ts",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm run check:lessons && npm run test:solutions"
   },

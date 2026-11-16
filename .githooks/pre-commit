@@ -1,0 +1,6 @@
+#!/bin/sh
+# Runs the full project check before every commit; a failing check blocks the commit.
+# Enabled by `npm install` (the "prepare" script sets git's core.hooksPath to .githooks).
+# Skip it once, e.g. for a work-in-progress commit: git commit --no-verify
+echo "pre-commit: npm run check…"
+npm run check --silent
