@@ -377,18 +377,18 @@ export function printToc(lesson: Lesson): void {
   );
 }
 
-export async function runLesson(lesson: Lesson): Promise<void> {
-  const args = process.argv.slice(2);
-  if (process.env.LESSON_TOC === '1') {
-    collectedLessons.push(lesson);
-    return;
-  }
-  if (args.includes('--toc')) {
-    printToc(lesson);
-    return;
-  }
-
-  // Lesson code must be real code: refuse to run if a snippet has a bare value line.
+/**
+ * Runs both static checks and prints every problem found (both lists, not just the first):
+ *  - bare value lines (findBareValues),
+ *  - TypeScript errors in snippets that are not marked with `typecheck` (checkTypes).
+ * Returns ok = false if anything is wrong, plus all TS errors: runLesson needs them later
+ * to show the verdict of `typecheck` examples in place.
+ */
+async function checkLesson(
+  lesson: Lesson,
+): Promise<{ ok: boolean; typeErrors: Map<string, SnippetTypeError[]> }> {
+  let ok = true;
+  // Lesson code must be real code: no bare value lines.
   const bareValues = await findBareValues(lesson);
   if (bareValues.length) {
     console.error(
@@ -401,11 +401,11 @@ export async function runLesson(lesson: Lesson): Promise<void> {
             '\n  Выведи значение явно: console.log(...).\n',
         ),
     );
-    process.exit(1);
+    ok = false;
   }
 
   // Lesson code must be valid TypeScript (unless an example shows a TS error on purpose:
-  // those are marked with `typecheck` and their errors are shown in place below).
+  // those are marked with `typecheck` and their errors are shown when the example is shown).
   const typeErrors = await checkTypes(lesson);
   const unexpected: string[] = [];
   for (const [i, section] of lesson.sections.entries()) {
@@ -428,8 +428,32 @@ export async function runLesson(lesson: Lesson): Promise<void> {
             "\n  typecheck: true (показать ошибку) или typecheck: 'and-run' (показать и выполнить).\n",
         ),
     );
-    process.exit(1);
+    ok = false;
   }
+  return { ok, typeErrors };
+}
+
+export async function runLesson(lesson: Lesson): Promise<void> {
+  const args = process.argv.slice(2);
+  if (process.env.LESSON_TOC === '1') {
+    collectedLessons.push(lesson);
+    return;
+  }
+  if (args.includes('--toc')) {
+    printToc(lesson);
+    return;
+  }
+
+  // Static checks before anything is shown; typeErrors is reused below to display the
+  // verdict of `typecheck` examples in place.
+  const { ok, typeErrors } = await checkLesson(lesson);
+  if (process.env.LESSON_CHECK === '1') {
+    // `npm run check:lessons`: report only. exitCode (not exit) lets the next lesson run.
+    if (ok) console.log(`  ✅ ${lesson.title}`);
+    else process.exitCode = 1;
+    return;
+  }
+  if (!ok) process.exit(1);
 
   const interactive = process.stdin.isTTY && !args.includes('--all');
   const fromIndex = args.indexOf('--from');

@@ -67,20 +67,21 @@ export function sum(nums: number[]): number {
 
 Все команды:
 
-| Команда                  | Что делает                                                                              |
-| ------------------------ | --------------------------------------------------------------------------------------- |
-| `npm run lesson <NN>`    | Интерактивная лекция по номеру (`-- --from N`, `-- --all`) или любой `.ts` файл по пути |
-| `npm run lessons`        | Список всех уроков и их секций (`npm run lessons list` — коротко, без секций)           |
-| `npm run playground`     | Урок 07: живые запросы к jsonplaceholder (нужен интернет)                               |
-| `npm run toc`            | Перегенерировать LESSONS.md                                                             |
-| `npm test`               | Прогнать все тесты один раз                                                             |
-| `npm run test:watch`     | Тесты в watch-режиме (`-- 02-map` чтобы отфильтровать модуль)                           |
-| `npm run test:solutions` | Прогнать **те же** тесты на эталонных решениях (всё должно быть 🟢)                     |
-| `npm run typecheck`      | `tsc --noEmit` — проверка типов во всём проекте                                         |
-| `npm run lint`           | ESLint: ищет баги в коде (форматирование — дело Prettier)                               |
-| `npm run lint:fix`       | ESLint + автоисправление того, что он умеет чинить сам (например, let → const)          |
-| `npm run format`         | Prettier                                                                                |
-| `npm run check`          | Всё разом: typecheck → lint → format:check → test:solutions (стоп на первой ошибке)     |
+| Команда                  | Что делает                                                                                          |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| `npm run lesson <NN>`    | Интерактивная лекция по номеру (`-- --from N`, `-- --all`) или любой `.ts` файл по пути             |
+| `npm run lessons`        | Список всех уроков и их секций (`npm run lessons list` — коротко, без секций)                       |
+| `npm run playground`     | Урок 07: живые запросы к jsonplaceholder (нужен интернет)                                           |
+| `npm run toc`            | Перегенерировать LESSONS.md                                                                         |
+| `npm test`               | Прогнать все тесты один раз                                                                         |
+| `npm run test:watch`     | Тесты в watch-режиме (`-- 02-map` чтобы отфильтровать модуль)                                       |
+| `npm run test:solutions` | Прогнать **те же** тесты на эталонных решениях (всё должно быть 🟢)                                 |
+| `npm run typecheck`      | `tsc --noEmit` — проверка типов во всём проекте                                                     |
+| `npm run lint`           | ESLint: ищет баги в коде (форматирование — дело Prettier)                                           |
+| `npm run lint:fix`       | ESLint + автоисправление того, что он умеет чинить сам (например, let → const)                      |
+| `npm run format`         | Prettier                                                                                            |
+| `npm run check:lessons`  | Проверить примеры всех уроков (строки-значения, типы TS), не показывая уроки                        |
+| `npm run check`          | Всё разом: typecheck → lint → format:check → check:lessons → test:solutions (стоп на первой ошибке) |
 
 💡 В VS Code поставь рекомендованное расширение **Vitest** (`vitest.explorer`) — тесты появятся в сайдбаре, можно запускать по одному и видеть ✅/❌ прямо в редакторе.
 

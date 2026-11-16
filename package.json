@@ -20,7 +20,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test:solutions"
+    "check:lessons": "tsx src/_utils/check-lessons.ts",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run check:lessons && npm run test:solutions"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
