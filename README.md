@@ -77,7 +77,10 @@ export function sum(nums: number[]): number {
 | `npm run test:watch`     | Тесты в watch-режиме (`-- 02-map` чтобы отфильтровать модуль)                           |
 | `npm run test:solutions` | Прогнать **те же** тесты на эталонных решениях (всё должно быть 🟢)                     |
 | `npm run typecheck`      | `tsc --noEmit` — проверка типов во всём проекте                                         |
+| `npm run lint`           | ESLint: ищет баги в коде (форматирование — дело Prettier)                               |
+| `npm run lint:fix`       | ESLint + автоисправление того, что он умеет чинить сам (например, let → const)          |
 | `npm run format`         | Prettier                                                                                |
+| `npm run check`          | Всё разом: typecheck → lint → format:check → test:solutions (стоп на первой ошибке)     |
 
 💡 В VS Code поставь рекомендованное расширение **Vitest** (`vitest.explorer`) — тесты появятся в сайдбаре, можно запускать по одному и видеть ✅/❌ прямо в редакторе.
 
