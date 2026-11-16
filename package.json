@@ -1,0 +1,35 @@
+{
+  "name": "ts-interview-prep",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JS/TS lessons + exercises for mid-level interviews: arrays, Map/Set, spread/rest, objects, closures, async, fetch, TypeScript.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lesson": "tsx src/_utils/run-lesson.ts",
+    "lessons": "tsx src/_utils/list-lessons.ts",
+    "playground": "tsx src/07-fetch-api/playground.ts",
+    "toc": "tsx src/_utils/list-lessons.ts --md && prettier --write LESSONS.md --log-level warn",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:solutions": "SOLUTIONS=1 vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.15.0",
+    "prettier": "^3.6.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.0.0"
+  }
+}
