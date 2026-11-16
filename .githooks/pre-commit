@@ -11,6 +11,9 @@
 #  - Nothing to hide → no stash at all (a `pop` would grab an older, unrelated stash).
 #  - If the check is interrupted, your changes are safe in `git stash list`
 #    ("pre-commit: hidden changes"); restore them with `git stash pop --index`.
+#  - Editing THIS file and committing only part of the edit? Use --no-verify: the stash
+#    would swap this script mid-run, and sh reads a script while executing it.
+#    (Committing the whole edit is fine: nothing is hidden, the file isn't swapped.)
 
 if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
   echo "pre-commit: npm run check…"
